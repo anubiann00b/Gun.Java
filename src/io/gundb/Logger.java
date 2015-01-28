@@ -1,6 +1,6 @@
 package io.gundb;
 
-public class Logger {
+class Logger {
     
     static void log(String str) {
         System.out.println(str);

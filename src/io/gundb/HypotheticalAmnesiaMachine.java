@@ -1,6 +1,6 @@
 package io.gundb;
 
-public class HypotheticalAmnesiaMachine {
+class HypotheticalAmnesiaMachine {
     
     Gun gun;
     
