@@ -11,6 +11,10 @@ public class Database {
     private Data data;
     private final FileWriter writer;
     
+    Database(Gun gun, String fileName) throws IOException {
+        this(gun, new File("fileName"));
+    }
+    
     Database(Gun gun, File file) throws IOException {
         this.gun = gun;
         writer = new FileWriter(file);
