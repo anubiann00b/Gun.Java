@@ -1,7 +1,5 @@
 package io.gundb;
 
-import org.json.simple.JSONObject;
-
 public class HypotheticalAmnesiaMachine {
     
     Gun gun;
@@ -10,17 +8,17 @@ public class HypotheticalAmnesiaMachine {
         this.gun = gun;
     }
     
-    public void handleIncomingData(long incomingState, JSONObject incomingValue) {
+    public void handleIncomingData(Data incoming) {
         long machineState = System.currentTimeMillis();
         
-        if (incomingState > machineState) {
+        if (incoming.state > machineState) {
             // amnesia quarantine
-        } else if (incomingState < gun.db.getCurrentState()) {
+        } else if (incoming.state < gun.db.getData().state) {
             // in the past, ignore
-        } else if (incomingState == gun.db.getCurrentState()) {
-            gun.db.mergeDeterministically(incomingValue, incomingState);
+        } else if (incoming.state == gun.db.getData().state) {
+            gun.db.mergeDeterministically(incoming);
         } else {
-            gun.db.merge(incomingValue, incomingState);
+            gun.db.merge(incoming);
         }
     }
 }

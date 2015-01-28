@@ -3,44 +3,37 @@ package io.gundb;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import org.json.simple.JSONObject;
 
 public class Database {
     
     Gun gun;
     
-    private long currentState;
-    private JSONObject currentValue;
+    private Data data;
     private final FileWriter writer;
     
     Database(Gun gun, File file) throws IOException {
         this.gun = gun;
         writer = new FileWriter(file);
     }
-
-    long getCurrentState() {
-        return currentState;
-    }
     
-    JSONObject getCurrentValue() {
-        return currentValue;
+    Data getData() {
+        return data;
     }
 
-    void mergeDeterministically(JSONObject incomingValue, long incomingState) {
+    void mergeDeterministically(Data incoming) {
         // Only merge if alphabetically greater.
-        if (getCurrentValue().toJSONString().compareTo(incomingValue.toJSONString()) > 0)
-            merge(incomingValue, incomingState);
+        if (data.value.toJSONString().compareTo(incoming.value.toJSONString()) > 0)
+            merge(incoming);
     }
 
-    void merge(JSONObject value, long state) {
-        currentValue = value;
-        currentState = state;
+    void merge(Data data) {
+        this.data = data;
         writeToFile();
     }
     
     void writeToFile() {
         try {
-            currentValue.writeJSONString(writer);
+            data.value.writeJSONString(writer);
         } catch (IOException e) {
             Logger.log(e);
         }
