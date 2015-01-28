@@ -11,7 +11,7 @@ public class Database {
     
     private long currentState;
     private JSONObject currentValue;
-    private FileWriter writer;
+    private final FileWriter writer;
     
     Database(Gun gun, File file) throws IOException {
         this.gun = gun;
@@ -26,17 +26,15 @@ public class Database {
         return currentValue;
     }
 
-    void chooseAndMerge(JSONObject incomingValue) {
-        if (getCurrentValue().equals(incomingValue))
-            return;
-        
+    void mergeDeterministically(JSONObject incomingValue, long incomingState) {
         // Only merge if alphabetically greater.
         if (getCurrentValue().toJSONString().compareTo(incomingValue.toJSONString()) > 0)
-            write(incomingValue);
+            merge(incomingValue, incomingState);
     }
 
-    void write(JSONObject value) {
+    void merge(JSONObject value, long state) {
         currentValue = value;
+        currentState = state;
         writeToFile();
     }
     

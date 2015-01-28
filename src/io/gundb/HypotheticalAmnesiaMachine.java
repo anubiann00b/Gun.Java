@@ -18,9 +18,9 @@ public class HypotheticalAmnesiaMachine {
         } else if (incomingState < gun.db.getCurrentState()) {
             // in the past, ignore
         } else if (incomingState == gun.db.getCurrentState()) {
-            gun.db.chooseAndMerge(incomingValue);
+            gun.db.mergeDeterministically(incomingValue, incomingState);
         } else {
-            gun.db.write(incomingValue);
+            gun.db.merge(incomingValue, incomingState);
         }
     }
 }
