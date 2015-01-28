@@ -12,7 +12,7 @@ class HypotheticalAmnesiaMachine {
         long machineState = System.currentTimeMillis();
         
         if (incoming.state > machineState) {
-            // amnesia quarantine
+            gun.quarantine.addTask(incoming); // amnesia quarantine
         } else if (incoming.state < gun.db.getData().state) {
             // in the past, ignore
         } else if (incoming.state == gun.db.getData().state) {
