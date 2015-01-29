@@ -14,12 +14,12 @@ class Quarantine {
         timer = new Timer();
     }
     
-    void addTask(final Data data) {
+    void addTask(final Node data, long time) {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 gun.ham.handleIncomingData(data);
             }
-        }, new Date(data.state+1));
+        }, new Date(time+1));
     }
 }
