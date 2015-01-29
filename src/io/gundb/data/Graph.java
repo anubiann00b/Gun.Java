@@ -1,14 +1,15 @@
-package io.gundb;
+package io.gundb.data;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import net.sf.json.JSONObject;
 
-public class Graph {
+public class Graph implements Iterable<Node> {
     
-    List<Node> nodes;
+    private final List<Node> nodes;
     
     public Graph(JSONObject source) {
         nodes = new LinkedList<Node>();
@@ -22,15 +23,20 @@ public class Graph {
         }
     }
 
-    Node getNode(long soul) {
+    public Node getNode(long soul) {
         int index = Collections.binarySearch(nodes, soul, null);
         if (index < 0)
             return null;
         return nodes.get(index);
     }
 
-    void addNode(Node incomingNode) {
+    public void addNode(Node incomingNode) {
         nodes.add(incomingNode);
         Collections.sort(nodes);
+    }
+
+    @Override
+    public Iterator<Node> iterator() {
+        return nodes.iterator();
     }
 }

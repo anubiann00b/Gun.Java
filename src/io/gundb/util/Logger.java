@@ -1,4 +1,4 @@
-package io.gundb;
+package io.gundb.util;
 
 class Logger {
     

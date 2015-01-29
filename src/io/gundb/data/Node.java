@@ -1,19 +1,19 @@
-package io.gundb;
+package io.gundb.data;
 
 import net.sf.json.JSONObject;
 
 public class Node implements Comparable<Node> {
     
-    JSONObject values;
-    JSONObject states;
-    long soul;
+    public final JSONObject values;
+    public final JSONObject states;
+    public final long soul;
     
     /**
      * Create a Node from a string.
      * 
      * @param rawData 
      */
-    Node(JSONObject rawData) {
+    public Node(JSONObject rawData) {
         this.values = rawData;
         this.states = values.getJSONObject("_").getJSONObject(">");
         this.soul = values.getJSONObject("_").getLong("#");

@@ -1,5 +1,8 @@
-package io.gundb;
+package io.gundb.core;
 
+import io.gundb.Gun;
+import io.gundb.data.Graph;
+import io.gundb.data.Node;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,18 +16,18 @@ public class Database {
     Graph data;
     private final FileWriter writer;
     
-    Database(Gun gun, String fileName) throws IOException {
+    public Database(Gun gun, String fileName) throws IOException {
         this(gun, new File("fileName"));
     }
     
-    Database(Gun gun, File file) throws IOException {
+    public Database(Gun gun, File file) throws IOException {
         this.gun = gun;
         writer = new FileWriter(file);
     }
     
     void writeToFile() {
         JSONObject obj = new JSONObject();
-        for (Node n : data.nodes) {
+        for (Node n : data) {
             obj.element(Long.toString(n.soul), n.values);
         }
         obj.write(writer);

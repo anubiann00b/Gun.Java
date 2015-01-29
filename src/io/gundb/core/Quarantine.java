@@ -1,15 +1,17 @@
-package io.gundb;
+package io.gundb.core;
 
+import io.gundb.Gun;
+import io.gundb.data.Node;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-class Quarantine {
+public class Quarantine {
     
     Gun gun;
     Timer timer;
     
-    Quarantine(Gun gun) {
+    public Quarantine(Gun gun) {
         this.gun = gun;
         timer = new Timer();
     }
