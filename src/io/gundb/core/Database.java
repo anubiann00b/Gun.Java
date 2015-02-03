@@ -6,8 +6,7 @@ import io.gundb.data.Node;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
-import net.sf.json.JSONObject;
+import org.json.JSONObject;
 
 public class Database {
     
@@ -28,7 +27,7 @@ public class Database {
     void writeToFile() {
         JSONObject obj = new JSONObject();
         for (Node n : data) {
-            obj.element(Long.toString(n.soul), n.values);
+            obj.put(Long.toString(n.soul), n.values);
         }
         obj.write(writer);
     }
@@ -42,11 +41,8 @@ public class Database {
             data.addNode(incomingNode);
             return;
         }
-        for (Object o : incomingNode.states.entrySet()) {
-            Map.Entry incomingStates = (Map.Entry) o;
-            
-            String field = (String) incomingStates.getKey();
-            long incomingState = (Long) incomingStates.getValue();
+        for (String field : incomingNode.states.keySet()) {
+            long incomingState = (Long) incomingNode.states.getLong(field);
             long currentState = currentNode.states.getLong(field);
             Object currentValue = currentNode.values.get(field);
             Object incomingValue = incomingNode.values.get(field);
@@ -62,10 +58,10 @@ public class Database {
             } else if (incomingState == currentState) {
                 // Only merge if the incoming value is alphanumerically greater.
                 if (incomingValue.toString().compareTo(currentValue.toString()) == 1)
-                    currentNode.values.element(field, incomingValue);
+                    currentNode.values.put(field, incomingValue);
             } else {
                 // Merge away!
-                currentNode.values.element(field, incomingValue);
+                currentNode.values.put(field, incomingValue);
             }
         }
     }

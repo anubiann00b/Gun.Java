@@ -1,6 +1,6 @@
 package io.gundb.data;
 
-import net.sf.json.JSONObject;
+import org.json.JSONObject;
 
 public class Node implements Comparable<Node> {
     
