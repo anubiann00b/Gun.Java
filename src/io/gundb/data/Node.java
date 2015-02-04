@@ -6,7 +6,7 @@ public class Node implements Comparable<Node> {
     
     public final JSONObject values;
     public final JSONObject states;
-    public final long soul;
+    public final String soul;
     
     /**
      * Create a Node from a string.
@@ -16,13 +16,13 @@ public class Node implements Comparable<Node> {
     public Node(JSONObject rawData) {
         this.values = rawData;
         this.states = values.getJSONObject("_").getJSONObject(">");
-        this.soul = values.getJSONObject("_").getLong("#");
+        this.soul = values.getJSONObject("_").getString("#");
         values.remove("_");
     }
 
     @Override
     public int compareTo(Node other) {
-        return Long.compare(soul, other.soul);
+        return soul.compareTo(other.soul);
     }
     
     @Override
@@ -30,7 +30,7 @@ public class Node implements Comparable<Node> {
         if (other == null)
             return false;
         if (other instanceof Long)
-            return ((Long) other) == soul;
+            return ((String) other).equals(soul);
         if (other instanceof Node)
             return compareTo((Node) other) == 0;
         return false;
@@ -38,7 +38,7 @@ public class Node implements Comparable<Node> {
 
     @Override
     public int hashCode() {
-        return (int) soul;
+        return soul.hashCode();
     }
 
     public boolean isNode(String key) {
@@ -46,7 +46,7 @@ public class Node implements Comparable<Node> {
     }
 
     public Node getNode(String key, Graph g) {
-        long soulRef = values.getJSONObject(key).getLong("#");
+        String soulRef = values.getJSONObject(key).getString("#");
         Node n = g.getNode(soulRef);
         return n;
     }

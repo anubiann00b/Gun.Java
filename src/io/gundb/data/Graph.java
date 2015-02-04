@@ -17,7 +17,7 @@ public class Graph implements Iterable<Node> {
             nodes.add(new Node(source.getJSONObject(soul)));
     }
 
-    public Node getNode(long soul) {
+    public Node getNode(String soul) {
         int index = Collections.binarySearch(nodes, soul, null);
         if (index < 0)
             return null;

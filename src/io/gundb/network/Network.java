@@ -21,13 +21,12 @@ public class Network {
     }
     
     public void send(Node n) {
-        
+        conn.send(n);
     }
     
     void onRecieve(JSONObject data) {
         if (data.has("url")) { // Requesting data
-            Node n = gun.db.getNodeFromPath(data.getJSONObject("url").getString("pathname"));
-            send(n);
+            send(gun.db.getNodeFromKey(data.getJSONObject("url").getString("pathname")));
         } else { // Sending data
             gun.ham.handleIncomingData(new Node(data));
         }

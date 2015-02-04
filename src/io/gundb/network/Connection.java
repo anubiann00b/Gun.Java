@@ -1,5 +1,6 @@
 package io.gundb.network;
 
+import io.gundb.data.Node;
 import java.io.IOException;
 
 public abstract class Connection {
@@ -11,4 +12,6 @@ public abstract class Connection {
     }
     
     public abstract void connect() throws IOException;
+
+    public abstract void send(Node n);
 }

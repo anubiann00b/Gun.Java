@@ -6,6 +6,7 @@ import io.gundb.data.Node;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Map;
 import org.json.JSONObject;
 
 public class Database {
@@ -13,6 +14,7 @@ public class Database {
     Gun gun;
     
     Graph data;
+    Map<String, String> keys;
     private final FileWriter writer;
     
     public Database(Gun gun, String fileName) throws IOException {
@@ -27,7 +29,7 @@ public class Database {
     void writeToFile() {
         JSONObject obj = new JSONObject();
         for (Node n : data) {
-            obj.put(Long.toString(n.soul), n.values);
+            obj.put(n.soul, n.values);
         }
         obj.write(writer);
     }
@@ -66,15 +68,8 @@ public class Database {
         }
     }
 
-    public Node getNodeFromPath(String path) {
-        String[] keys = path.split("/");
-        
-        Node root = data.getFirstNode();
-        for (String key : keys) {
-            if (!root.isNode(key))
-                return null;
-            root = root.getNode(key, data);
-        }
-        return root;
+    public Node getNodeFromKey(String key) {
+        String soul = keys.get(key);
+        return data.getNode(soul); // Null if key doesn't exist.
     }
 }
