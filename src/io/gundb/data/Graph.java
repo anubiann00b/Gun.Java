@@ -33,4 +33,8 @@ public class Graph implements Iterable<Node> {
     public Iterator<Node> iterator() {
         return nodes.iterator();
     }
+
+    public Node getFirstNode() {
+        return nodes.get(0);
+    }
 }

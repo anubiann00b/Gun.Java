@@ -40,4 +40,14 @@ public class Node implements Comparable<Node> {
     public int hashCode() {
         return (int) soul;
     }
+
+    public boolean isNode(String key) {
+        return values.optJSONObject(key) != null;
+    }
+
+    public Node getNode(String key, Graph g) {
+        long soulRef = values.getJSONObject(key).getLong("#");
+        Node n = g.getNode(soulRef);
+        return n;
+    }
 }

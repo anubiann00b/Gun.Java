@@ -65,4 +65,16 @@ public class Database {
             }
         }
     }
+
+    public Node getNodeFromPath(String path) {
+        String[] keys = path.split("/");
+        
+        Node root = data.getFirstNode();
+        for (String key : keys) {
+            if (!root.isNode(key))
+                return null;
+            root = root.getNode(key, data);
+        }
+        return root;
+    }
 }
