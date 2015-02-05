@@ -72,4 +72,8 @@ public class Database {
         String soul = keys.get(key);
         return data.getNode(soul); // Null if key doesn't exist.
     }
+
+    public void addKey(String key, String soul) {
+        keys.put(key, soul);
+    }
 }
