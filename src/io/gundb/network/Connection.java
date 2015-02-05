@@ -11,7 +11,6 @@ public abstract class Connection {
         this.network = network;
     }
     
-    public abstract void connect() throws IOException;
-
-    public abstract void send(Node n);
+    public abstract void request() throws IOException;
+    public abstract void send(Node n) throws IOException;
 }

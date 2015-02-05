@@ -17,16 +17,20 @@ public class Network {
     }
     
     public void connect() throws IOException {
-        conn.connect();
+        conn.request();
     }
     
-    public void send(Node n) {
+    public void send(Node n) throws IOException {
         conn.send(n);
     }
     
     void onRecieve(JSONObject data) {
         if (data.has("url")) { // Data request
-            send(gun.db.getNodeFromKey(data.getJSONObject("url").getString("pathname")));
+            try {
+                send(gun.db.getNodeFromKey(data.getJSONObject("url").getString("pathname")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else if (data.has("body")) { // Data
             gun.ham.handleIncomingData(new Node(data));
         } else { // Key
