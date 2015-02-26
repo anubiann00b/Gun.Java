@@ -3,16 +3,26 @@ package io.gundb.network;
 import io.gundb.Gun;
 import io.gundb.data.Node;
 import java.io.IOException;
+import java.net.URI;
 import org.json.JSONObject;
 
 public class Network {
     
-    private final Connection conn;
+    private Connection conn;
     Gun gun;
     
-    private Network(Gun gun, Connection conn) {
+    public static Network createNetwork(Gun gun, URI remote) {
+        Network n = new Network(gun);
+        Connection c = new WebsocketConnection(n, remote);
+        n.setConnection(c);
+        return n;
+    }
+    
+    private Network(Gun gun) {
         this.gun = gun;
-        conn.setNetwork(this);
+    }
+    
+    public void setConnection(Connection conn) {
         this.conn = conn;
     }
     
